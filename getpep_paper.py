@@ -1,28 +1,53 @@
-import re
-def parse(infile,seqdict,proteinindex,pepindex,ratioindex):
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Feb 11 15:21:03 2017
+
+@author: ybwang
+"""
+import re,sys,os
+from optparse import OptionParser
+
+def main():
+    usage = 'usage: python %prog [options] -i MSresultfile -s seqfile -u proteincolumn -p pepcolumn -r ratiocolumn -o output'
+    parser = OptionParser(usage)
+    parser.add_option('-i','--msfile', dest='msfile', help='quantification file using MaxQuant or others [Default %default]')
+    parser.add_option('-s','--seqfile', dest='seqfile', help='fasta file used for the database search [Default %default]')
+    parser.add_option('-o','--outdir', dest='outdir',default='output', help='output directory [Default %default]')
+    parser.add_option('-u', dest='protein',default=0, help='protein column, 0-based, like "IPI00021812.2" [Default %default]')
+    parser.add_option('-p', dest='pep',default=1, help='pep column, 0-based, like "_HRS(ph)NS(ph)FSDER_" [Default %default]')
+    parser.add_option('-r', dest='ratio',default=4, help='ratio column, 0-based, like "0.38957" [Default %default]')
+    (options, args) = parser.parse_args()
+    if options.msfile is None or options.seqfile is None or options.protein is None or options.pep is None or options.ratio is None:
+        sys.exit("[ERROR] "+parser.get_usage())
+    if not os.path.exists(options.outdir):
+        os.makedirs(options.outdir)
+    
+    seqdict = readseq(options.seqfile)
+    parse(options.msfile,seqdict,options.protein,options.pep,options.ratio)
+
+def parse(infile,seqdict,proteinindex,pepindex,ratioindex, outdir = 'output', rmfirst=True):
     data = {}
     num = {}
     n = 0
     with open(infile,'r') as f:
         for line in f:
             n += 1
-            if line.find('Protein') != -1: continue
+            if rmfirst and n == 1: continue
             ele = line.rstrip('\r\n').split("\t")
-            id = ele[0]
-            pep = re.sub(re.compile("(^_)|(_$)"),'',ele[1])
+            id, pep, ratio = ele[proteinindex], ele[pepindex], ele[ratioindex]
+            # remove 'K.', '.R', '-', '_', '*', and replace '(ph)' to '#' for convinence
+            pep = re.sub(re.compile("(^_)|(_$)"),'',pep)
             pep = re.sub(re.compile("(^\w+\.|^-\.)|(\.\w+$|\.\-$)"),'',pep)
             pep = re.sub(re.compile("@"),'',pep)
             pep = re.sub(re.compile("\(ph\)"),'#',pep)
             pep = re.sub(re.compile("\(\w+\)"),'',pep)
             pep = re.sub(re.compile('\*'),'',pep)
-            if ele[ratioindex] == '': continue
-            ratio = float(ele[ratioindex])
+            # if ratio is '' or 'NA', continue
+            if ratio == '' or ratio == 'NA': continue
+            ratio = float(ratio)
             l = getindex(pep)
             seq = seqdict[id]
             index = seq.find(re.sub(r'#','',pep)) + 1
-            # print id,pep,l,index
-            if len(l) < 1:
-                print id,pep,l
             for i in range(len(l)):
                 # sites.append(l[i] + index - 1)
                 s = l[i] + index - 1
@@ -35,12 +60,15 @@ def parse(infile,seqdict,proteinindex,pepindex,ratioindex):
                 else:
                     data[key] = ratio
                     num[key] = 1
-                # print id,newpep,s,ratio
-    for k in data:
-        ratio = data[k] / float(num[k])
-        print k+'\t'+str(1 / ratio)
+
+    # output to elm file
+    with open(outdir+'/ratio.elm.txt','w') as fout:
+        for k in data:
+            ratio = data[k] / float(num[k])
+            s = k+'\t'+str(1 / ratio)	# attention: ratio reverse only for this paper
+            fout.write(s + '\n')
     pdict = {}
-    with open('PhosphoPep.txt','w') as fout:
+    with open(outdir+'/PhosphoPep.txt','w') as fout:
         for k in data:
             pep = k.split('\t')[3]
             center = (len(pep) - 1) / 2
@@ -76,6 +104,7 @@ def readseq(seqfile):
     return seqdict
 
 if __name__ == '__main__':
-    seqdict = readseq('seq.txt')
-    parse('data_paper.txt',seqdict,0,1,4)
+	main()
+    # seqdict = readseq('seq.txt')
+    # parse('data_paper.txt',seqdict,0,1,4)
     # print getPeptideFlank('MSQVQVQVQNPSAALSGSQILNKNQSLLSQPLMSIPSTTSSLPSENAGRPIQNSALPSAS',58,7,7)
