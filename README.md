@@ -7,7 +7,6 @@ Protein phosphorylation is one of the most important post-translational modifica
 Overview
 ------------
 The iKAP 1.0 workflow consists of: 
-    • 1) (Optional) Pre process with SILAC based Phosphoproteomics data identified with MaxQuant and generate ELM file 
-    • 2) Transform the format of peptides in ELM file to be acceptable for iGPS software. 
-    • 3) Kinase prediction using iGPS software. 
-    • 4) KA analysis.
+(1) (Optional) Pre process with SILAC based Phosphoproteomics data identified with MaxQuant and generate ELM file 
+(2) Kinase prediction using iGPS software. 
+(3) KA analysis.
