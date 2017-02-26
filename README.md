@@ -6,7 +6,29 @@ Protein phosphorylation is one of the most important post-translational modifica
 
 Overview
 ------------
-The iKAP 1.0 workflow consists of: 
-(1) (Optional) Pre process with SILAC based Phosphoproteomics data identified with MaxQuant and generate ELM file 
-(2) Kinase prediction using iGPS software. 
-(3) KA analysis.
+The iKAP 1.0 workflow consists of: <br />
+(1) (Optional) Pre process with SILAC based Phosphoproteomics data identified with MaxQuant and generate ELM file <br />
+(2) Kinase prediction using iGPS software. <br />
+(3) KA analysis.<br />
+
+Pre-requisites and Install
+------------
+    1. python 2.7.x.x
+	2. iGPS installed
+
+Usage
+------------
+(Optional) Pre process with SILAC based Phosphoproteomics data identified with MaxQuant and generate ELM file <br />
+```
+python getpep.py -h
+Usage: python getpep.py [options] -i MSresultfile -s seqfile -u proteincolumn -p pepcolumn -r ratiocolumn -o output
+
+Options:
+  -h, --help            show this help message and exit
+  -i MSFILE				quantification file using MaxQuant or others [Default none]
+  -s SEQFILE			fasta file used for the database search [Default none]
+  -o OUTDIR				output directory [Default output]
+  -u PROTEIN            protein column, 0-based, like "IPI00021812.2" [Default 0]
+  -p PEP                pep column, 0-based, like "_HRS(ph)NS(ph)FSDER_" [Default 1]
+  -r RATIO              ratio column, 0-based, like "0.38957" [Default 4]
+```

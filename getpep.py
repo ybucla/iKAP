@@ -10,9 +10,9 @@ from optparse import OptionParser
 def main():
     usage = 'usage: python %prog [options] -i MSresultfile -s seqfile -u proteincolumn -p pepcolumn -r ratiocolumn -o output'
     parser = OptionParser(usage)
-    parser.add_option('-i','--msfile', dest='msfile', help='quantification file using MaxQuant or others [Default %default]')
-    parser.add_option('-s','--seqfile', dest='seqfile', help='fasta file used for the database search [Default %default]')
-    parser.add_option('-o','--outdir', dest='outdir',default='output', help='output directory [Default %default]')
+    parser.add_option('-i', dest='msfile', help='quantification file using MaxQuant or others [Default %default]')
+    parser.add_option('-s', dest='seqfile', help='fasta file used for the database search [Default %default]')
+    parser.add_option('-o', dest='outdir',default='output', help='output directory [Default %default]')
     parser.add_option('-u', dest='protein',default=0, help='protein column, 0-based, like "IPI00021812.2" [Default %default]')
     parser.add_option('-p', dest='pep',default=1, help='pep column, 0-based, like "_HRS(ph)NS(ph)FSDER_" [Default %default]')
     parser.add_option('-r', dest='ratio',default=4, help='ratio column, 0-based, like "0.38957" [Default %default]')
