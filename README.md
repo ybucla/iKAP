@@ -18,7 +18,7 @@ Pre-requisites and Install
 
 Usage
 ------------
-1. (Optional) Pre process with SILAC based Phosphoproteomics data identified with MaxQuant and generate ELM file <br />
+(1). (Optional) Pre process with SILAC based Phosphoproteomics data identified with MaxQuant and generate ELM file <br />
 ```
 python getpep.py -h
 Usage: python getpep.py [options] -i MSresultfile -s seqfile -u proteincolumn -p pepcolumn -r ratiocolumn -o output
@@ -32,7 +32,8 @@ Options:
   -p PEP                pep column, 0-based, like "_HRS(ph)NS(ph)FSDER_" [Default 1]
   -r RATIO              ratio column, 0-based, like "0.38957" [Default 4]
 ```
-2. Kinase prediction using iGPS software. <br />
+
+(2). Kinase prediction using iGPS software. <br />
     1. Open iGPS 1.0 and COPY the peptides from the previous result "PhosphoPep.txt" into iGPS software. 
     2. Select All kinases. 
     3. Set species to "M.musculus" (or species in research) and thresehold as "Low". 
