@@ -14,7 +14,8 @@ The iKAP 1.0 workflow consists of: <br />
 Pre-requisites and Install
 ------------
     1. python 2.7.x.x
-	2. iGPS installed
+	2. python package 'scipy' and 'numpy' installed
+	3. iGPS installed
 
 Usage
 ------------
@@ -42,3 +43,16 @@ Options:
 5. The prediction results will be displayed in the result panel. 
 6. Save the results to file. Here, the results were saved into "output/kinase_prediction.iGPS".
 ```
+
+(3). KA analysis.<br />
+```
+python KAnalysis.py -h
+Usage: python KAnalysis.py -i ratioElmfile -g iGPSResultfile -o output
+
+Options:
+  -h, --help   show this help message and exit
+  -i ELMFILE   quantification ratio elm file [Default none]
+  -g IGPSFILE  result file from iGPS [Default none]
+  -o OUTDIR    output directory [Default output]
+```
+

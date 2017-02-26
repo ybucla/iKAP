@@ -10,6 +10,21 @@ import numpy as np
 from scipy import stats
 import sys,os
 
+def main():
+    usage = 'usage: python %prog -i ratioElmfile -g iGPSResultfile -o output'
+    parser = OptionParser(usage)
+    parser.add_option('-i', dest='elmfile', help='quantification ratio elm file [Default %default]')
+    parser.add_option('-g', dest='igpsfile', help='result file from iGPS [Default %default]')
+    parser.add_option('-o', dest='outdir',default='output', help='output directory [Default %default]')
+    (options, args) = parser.parse_args()
+    if options.elmfile is None or options.igpsfile is None:
+        sys.exit("[ERROR] "+parser.get_usage())
+    if not os.path.exists(options.outdir):
+        os.makedirs(options.outdir)
+		
+    datalist = parseiGPS(options.elmfile,options.igpsfile)
+    ka(datalist,options.outdir)
+
 def parseiGPS(elmfile,igpsfile):
     data = defaultdict(dict)
     # read elm file
@@ -110,20 +125,7 @@ def ChiTestSqure(ap,an,bp,bn):
     result = (er,kfValue,pvalue)
     return result
 
-def main():
-    usage = 'usage: python %prog -i ratioElmfile -g iGPSResultfile -o output'
-    parser = OptionParser(usage)
-    parser.add_option('-i','--elmfile', dest='elmfile', help='quantification ratio elm file [Default %default]')
-    parser.add_option('-g','--igpsfile', dest='igpsfile', help='result file from iGPS [Default %default]')
-    parser.add_option('-o','--outdir', dest='outdir',default='output', help='output directory [Default %default]')
-    (options, args) = parser.parse_args()
-    if options.elmfile is None or options.igpsfile is None:
-        sys.exit("[ERROR] "+parser.get_usage())
-    if not os.path.exists(options.outdir):
-        os.makedirs(options.outdir)
-    datalist = parseiGPS(options.elmfile,options.igpsfile)
-    ka(datalist,options.outdir)
-
 if __name__ == '__main__':
-    datalist = parseiGPS('MH.txt','1.iGPS')
-    ka(datalist)
+	main()
+    # datalist = parseiGPS('MH.txt','1.iGPS')
+    # ka(datalist)
