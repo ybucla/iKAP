@@ -1,4 +1,5 @@
 # iKAP
+in silico Kinome Activity Profiling
 
 Introduction
 ------------
