@@ -43,7 +43,7 @@ Options:
 5. The prediction results will be displayed in the result panel. 
 6. Save the results to file. Here, the results were saved into "output/kinase_prediction.iGPS".
 ```
-![]https://github.com/ybucla/iKAP/blob/master/igpsflow.png
+![](https://github.com/ybucla/iKAP/blob/master/igpsflow.png)
 
 (3). KA analysis.<br />
 ```
