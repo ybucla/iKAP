@@ -34,10 +34,11 @@ Options:
 ```
 
 (2). Kinase prediction using iGPS software. <br />
-    1. Open iGPS 1.0 and COPY the peptides from the previous result "PhosphoPep.txt" into iGPS software. 
-    2. Select All kinases. 
-    3. Set species to "M.musculus" (or species in research) and thresehold as "Low". 
-    4. Submit and wait for the calculation, which may take about 1 min according the amount of peptides input. 
-    5. The prediction results will be displayed in the result panel. 
-    6. Save the results to file. Here, the results were saved into "output/kinase_prediction.iGPS".
-
+```
+1. Open iGPS 1.0 and COPY the peptides from the previous result "PhosphoPep.txt" into iGPS software. 
+2. Select All kinases. 
+3. Set species to "M.musculus" (or species in research) and thresehold as "Low". 
+4. Submit and wait for the calculation, which may take about 1 min according the amount of peptides input. 
+5. The prediction results will be displayed in the result panel. 
+6. Save the results to file. Here, the results were saved into "output/kinase_prediction.iGPS".
+```
